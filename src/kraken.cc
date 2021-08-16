@@ -167,4 +167,6 @@ void print_kraken_duty(struct text_object *obj, char *p, unsigned int p_max_size
 void free_kraken(struct text_object * obj){
   (void)obj;
   close(kraken_current_state.fd);
+  kraken_initialized = 0;
+  kraken_current_state.fd = -1;
 }
