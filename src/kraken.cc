@@ -83,23 +83,39 @@ int init_kraken(){
 	memset(&rpt_desc, 0x0, sizeof(rpt_desc));
 	memset(&info, 0x0, sizeof(info));
 	memset(buf, 0x0, sizeof(buf));
-
+  
   /*Initialize device*/
   buf[0]  = 0x10;
   buf[1] = 0x01;
-  write(kraken_current_state.fd, buf, 2);
+  res = write(kraken_current_state.fd, buf, 2);
+	if (res < 0) {
+    NORM_ERR("%s: Failed to init  Kraken device", __func__);
+    return 1;
+	}
   buf[0]  = 0x20;
   buf[1] = 0x03;
-  write(kraken_current_state.fd, buf, 2);
+  res = write(kraken_current_state.fd, buf, 2);
+	if (res < 0) {
+    NORM_ERR("%s: Failed to init  Kraken device", __func__);
+    return 1;
+	}
   buf[0]  = 0x70;
   buf[1] = 0x02;
   buf[2]  = 0x01;
   buf[3] = 0xb8;
   buf[4] = 0x01;
-  write(kraken_current_state.fd, buf, 5);
+  res = write(kraken_current_state.fd, buf, 5);
+	if (res < 0) {
+    NORM_ERR("%s: Failed to init  Kraken device", __func__);
+    return 1;
+	}
   buf[0]  = 0x70;
   buf[1] = 0x01;
-  write(kraken_current_state.fd, buf, 2);
+  res = write(kraken_current_state.fd, buf, 2);
+	if (res < 0) {
+    NORM_ERR("%s: Failed to init  Kraken device", __func__);
+    return 1;
+	}
 	
   res = read(kraken_current_state.fd, buf, KRAKEN_REPORT_SIZE);
 	if (res < 0) {
