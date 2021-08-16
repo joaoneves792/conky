@@ -292,6 +292,13 @@ if(BUILD_HSV_GRADIENT)
   set(optional_sources ${optional_sources} ${hsv_gradient})
 endif(BUILD_HSV_GRADIENT)
 
+if(BUILD_KRAKEN)
+  find_package(libudev REQUIRED)
+  set(conky_libs ${conky_libs} ${UDEV_LIBRARIES})
+  set(kraken_srcs kraken.cc kraken.h)
+  set(optional_sources ${optional_sources} ${kraken_srcs})
+endif(BUILD_KRAKEN)
+
 if(BUILD_TESTS)
   # Create a library strictly for testing
   add_library(conky_core ${conky_sources} ${optional_sources})

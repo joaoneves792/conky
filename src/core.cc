@@ -110,6 +110,9 @@
 #ifdef BUILD_INTEL_BACKLIGHT
 #include "intel_backlight.h"
 #endif /* BUILD_INTEL_BACKLIGHT */
+#ifdef BUILD_KRAKEN
+#include "kraken.h"
+#endif /* BUILD_KRAKEN */
 
 /* check for OS and include appropriate headers */
 #if defined(__linux__)
@@ -1708,6 +1711,17 @@ struct text_object *construct_text_object(char *s, const char *arg, long line,
       &if_xmms2_connected;
   obj->callbacks.free = &free_xmms2;
 #endif /* BUILD_XMMS2 */
+#ifdef BUILD_KRAKEN
+  END OBJ(kraken_rpm, &update_kraken) obj->callbacks.print =
+      &print_kraken_rpm;
+  obj->callbacks.free = &free_kraken;
+  END OBJ(kraken_liquid_temp, &update_kraken) obj->callbacks.print =
+      &print_kraken_liquid_temp;
+  obj->callbacks.free = &free_kraken;
+  END OBJ(kraken_duty, &update_kraken) obj->callbacks.print =
+      &print_kraken_duty;
+  obj->callbacks.free = &free_kraken;
+#endif /* BUILD_KRAKEN */
 #ifdef BUILD_AUDACIOUS
   END OBJ(audacious_status, 0) obj->callbacks.print = &print_audacious_status;
   END OBJ_ARG(audacious_title, 0, "audacious_title needs an argument")

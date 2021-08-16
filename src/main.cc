@@ -112,6 +112,9 @@ static void print_version() {
 #ifdef BUILD_NVIDIA
             << _("  * nvidia\n")
 #endif /* BUILD_NVIDIA */
+#ifdef BUILD_KRAKEN
+            << _("  * kraken\n")
+#endif /* BUILD_KRAKEN */
 #ifdef BUILD_BUILTIN_CONFIG
             << _("  * builtin default configuration\n")
 #endif /* BUILD_BUILTIN_CONFIG */

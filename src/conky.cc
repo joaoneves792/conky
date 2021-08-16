@@ -120,6 +120,9 @@
 #ifdef BUILD_WEATHER_METAR
 #include "weather.h"
 #endif /* BUILD_WEATHER_METAR */
+#ifdef BUILD_KRAKEN
+#include "kraken.h"
+#endif
 
 #include "lua-config.hh"
 #include "setting.hh"
