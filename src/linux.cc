@@ -1422,29 +1422,29 @@ static void parse_sysfs_sensor(struct text_object *obj, const char *arg,
   memset(buf1, 0, 64);
   memset(buf2, 0, 64);
 
-  if ( sscanf(arg, "%63s %d %f %f %d", buf2, &n, &factor, &offset, &decimals) == 5 && printf("2\n"))
+  if ( sscanf(arg, "%63s %d %f %f %d", buf2, &n, &factor, &offset, &decimals) == 5)
     found = 1;
   else if (!found)
     HWMON_RESET();
-  if (sscanf(arg, "%63s %d %f %f", buf2, &n, &factor, &offset) == 4 && printf("1\n"))
+  if (sscanf(arg, "%63s %d %f %f", buf2, &n, &factor, &offset) == 4)
     found = 1;
   else
     HWMON_RESET();
   if (!found &&
-      sscanf(arg, "%63s %63s %d %f %f %d", buf1, buf2, &n, &factor, &offset, &decimals) == 6 && printf("4\n"))
+      sscanf(arg, "%63s %63s %d %f %f %d", buf1, buf2, &n, &factor, &offset, &decimals) == 6)
     found = 1;
   else if (!found)
     HWMON_RESET();
   if (!found &&
-      sscanf(arg, "%63s %63s %d %f %f", buf1, buf2, &n, &factor, &offset) == 5 && printf("3\n"))
+      sscanf(arg, "%63s %63s %d %f %f", buf1, buf2, &n, &factor, &offset) == 5)
     found = 1;
   else if (!found)
     HWMON_RESET();
-  if (!found && sscanf(arg, "%63s %63s %d", buf1, buf2, &n) == 3 && printf("5\n"))
+  if (!found && sscanf(arg, "%63s %63s %d", buf1, buf2, &n) == 3)
     found = 1;
   else if (!found)
     HWMON_RESET();
-  if (!found && sscanf(arg, "%63s %d", buf2, &n) == 2 && printf("6\n"))
+  if (!found && sscanf(arg, "%63s %d", buf2, &n) == 2)
     found = 1;
   else if (!found)
     HWMON_RESET();
