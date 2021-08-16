@@ -96,6 +96,7 @@ struct sysfs {
   char devtype[256];
   char type[64];
   float factor, offset;
+  int decimals;
 };
 
 /* To be used inside upspeed/f downspeed/f as ${gw_iface} variable */
@@ -1416,24 +1417,34 @@ static void parse_sysfs_sensor(struct text_object *obj, const char *arg,
   char buf1[64], buf2[64];
   float factor, offset;
   int n, found = 0;
+  int decimals = -1;
   struct sysfs *sf;
   memset(buf1, 0, 64);
   memset(buf2, 0, 64);
 
-  if (sscanf(arg, "%63s %d %f %f", buf2, &n, &factor, &offset) == 4)
+  if ( sscanf(arg, "%63s %d %f %f %d", buf2, &n, &factor, &offset, &decimals) == 5 && printf("2\n"))
+    found = 1;
+  else if (!found)
+    HWMON_RESET();
+  if (sscanf(arg, "%63s %d %f %f", buf2, &n, &factor, &offset) == 4 && printf("1\n"))
     found = 1;
   else
     HWMON_RESET();
   if (!found &&
-      sscanf(arg, "%63s %63s %d %f %f", buf1, buf2, &n, &factor, &offset) == 5)
+      sscanf(arg, "%63s %63s %d %f %f %d", buf1, buf2, &n, &factor, &offset, &decimals) == 6 && printf("4\n"))
     found = 1;
   else if (!found)
     HWMON_RESET();
-  if (!found && sscanf(arg, "%63s %63s %d", buf1, buf2, &n) == 3)
+  if (!found &&
+      sscanf(arg, "%63s %63s %d %f %f", buf1, buf2, &n, &factor, &offset) == 5 && printf("3\n"))
     found = 1;
   else if (!found)
     HWMON_RESET();
-  if (!found && sscanf(arg, "%63s %d", buf2, &n) == 2)
+  if (!found && sscanf(arg, "%63s %63s %d", buf1, buf2, &n) == 3 && printf("5\n"))
+    found = 1;
+  else if (!found)
+    HWMON_RESET();
+  if (!found && sscanf(arg, "%63s %d", buf2, &n) == 2 && printf("6\n"))
     found = 1;
   else if (!found)
     HWMON_RESET();
@@ -1442,8 +1453,8 @@ static void parse_sysfs_sensor(struct text_object *obj, const char *arg,
     obj_be_plain_text(obj, "fail");
     return;
   }
-  DBGP("parsed %s args: '%s' '%s' %d %f %f\n", type, buf1, buf2, n, factor,
-       offset);
+  DBGP("parsed %s args: '%s' '%s' %d %f %f %d\n", type, buf1, buf2, n, factor,
+       offset, decimals);
   sf = (struct sysfs *)malloc(sizeof(struct sysfs));
   memset(sf, 0, sizeof(struct sysfs));
   sf->fd = open_sysfs_sensor(path, (*buf1) ? buf1 : 0, buf2, n, &sf->arg,
@@ -1451,6 +1462,7 @@ static void parse_sysfs_sensor(struct text_object *obj, const char *arg,
   strncpy(sf->type, buf2, 63);
   sf->factor = factor;
   sf->offset = offset;
+  sf->decimals = decimals;
   obj->data.opaque = sf;
 }
 
@@ -1473,8 +1485,9 @@ void print_sysfs_sensor(struct text_object *obj, char *p,
   r = get_sysfs_info(&sf->fd, sf->arg, sf->devtype, sf->type);
 
   r = r * sf->factor + sf->offset;
-
-  if (0 == (strcmp(temp2, "temp2"))) {
+  if(sf->decimals >= 0){
+    snprintf(p, p_max_size, "%.*f", sf->decimals, r);
+  } else if (0 == (strcmp(temp2, "temp2"))) {
     temp_print(p, p_max_size, r, TEMP_CELSIUS, 0);
   } else if (!strncmp(sf->type, "temp", 4)) {
     temp_print(p, p_max_size, r, TEMP_CELSIUS, 1);
