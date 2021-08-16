@@ -1,0 +1,67 @@
+# Maintainer: Renato Garcia <fgarcia.renato@gmail.com>
+# Contributor: Giovanni Scafora <giovanni@archlinux.org>
+# Contributor: James Rayner <james@archlinux.org>
+# Contributor: Partha Chowdhury <kira.laucas@gmail.com>
+# Contributor: Gaetan Bisson <bisson@archlinux.org>
+
+pkgname=conky-joao
+_pkgname=conky
+pkgver=1.12.2.r6.g200c8f86
+_gitcommit=200c8f86a630c37000a08e282d21381649226e17
+pkgrel=1
+pkgdesc='Lightweight system monitor for X'
+url='https://github.com/brndnmtthws/conky'
+license=('BSD' 'GPL')
+arch=('x86_64')
+makedepends=('cmake' 'docbook2x' 'docbook-xsl' 'man-db' 'git')
+depends=(
+  'glibc' 'glib2' 'lua' 'wireless_tools' 'libxdamage' 'libxinerama' 'libxft' 'imlib2'
+  'libxml2' 'libpulse' 'libxnvctrl' 'systemd-libs' 'ncurses' 'curl'
+  libncursesw.so libXNVCtrl.so libsystemd.so libpulse.so libcurl.so)
+source=("git+https://github.com/joaoneves792/conky.git#tag=${_gitcommit}")
+sha512sums=('SKIP')
+b2sums=('SKIP')
+provides=('conky')
+conflicts=('conky')
+
+pkgver() {
+  cd ${_pkgname}
+  git describe --tags --match 'v*' | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+  cd ${_pkgname}
+  cmake \
+    -B build \
+    -D CMAKE_BUILD_TYPE=Release \
+    -D MAINTAINER_MODE=ON \
+    -D BUILD_DOCS=ON \
+    -D BUILD_NVIDIA=ON \
+    -D BUILD_IBM=ON \
+    -D BUILD_XMMS2=ON \
+    -D BUILD_CURL=ON \
+    -D BUILD_WLAN=ON \
+    -D BUILD_XDBE=ON \
+    -D BUILD_XSHAPE=ON \
+    -D BUILD_IMLIB2=ON \
+    -D BUILD_RSS=ON \
+    -D BUILD_WEATHER_METAR=ON \
+    -D BUILD_PULSEAUDIO=ON \
+    -D BUILD_JOURNAL=ON \
+    -D BUILD_KRAKEN=ON \
+    -D CMAKE_INSTALL_PREFIX=/usr \
+    -Wno-dev \
+    -S .
+
+  make -C build
+}
+
+package() {
+  cd ${_pkgname}
+  make -C build DESTDIR="${pkgdir}" install
+  install -Dm 644 COPYING -t "${pkgdir}/usr/share/licenses/${_pkgname}"
+  install -Dm 644 extras/vim/syntax/conkyrc.vim -t "${pkgdir}"/usr/share/vim/vimfiles/syntax
+  install -Dm 644 extras/vim/ftdetect/conkyrc.vim -t "${pkgdir}"/usr/share/vim/vimfiles/ftdetect
+}
+
+# vim: ts=2 sw=2 et:

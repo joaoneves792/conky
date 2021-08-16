@@ -25,3 +25,8 @@ lua/libimlib2.c
 *.code-workspace
 .idea/
 
+#ignore PKGBUILD artifacts
+archlinux/*
+!archlinux/PKGBUILD
+
+
