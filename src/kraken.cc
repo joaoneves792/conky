@@ -150,19 +150,22 @@ int update_kraken(){
   }while((res < 0 && !usleep(1000)) || buf[0] != 0x75); 
 
   kraken_current_state.liquid_temp = buf[15]+buf[16]/10.0;
-  kraken_current_state.rpm = (buf[18] << 8) | buf[17];
+  unsigned int rpm = buf[18];
+  rpm = rpm << 8;
+  rpm |= (buf[17] & 0xff);
+  kraken_current_state.rpm = rpm;
   kraken_current_state.duty = buf[19];
   return 0;
 }
 
 void print_kraken_rpm(struct text_object *obj, char *p, unsigned int p_max_size){
-    snprintf(p, p_max_size, "%d", kraken_current_state.rpm);
+    snprintf(p, p_max_size, "%u", kraken_current_state.rpm);
 }
 void print_kraken_liquid_temp(struct text_object *obj, char *p, unsigned int p_max_size){
     snprintf(p, p_max_size, "%.1f", kraken_current_state.liquid_temp);
 }
 void print_kraken_duty(struct text_object *obj, char *p, unsigned int p_max_size){
-    snprintf(p, p_max_size, "%d", kraken_current_state.duty);
+    snprintf(p, p_max_size, "%u", kraken_current_state.duty);
 }
 void free_kraken(struct text_object * obj){
   (void)obj;

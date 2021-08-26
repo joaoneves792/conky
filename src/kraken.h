@@ -13,9 +13,9 @@
 
 struct kraken_state{
   int fd;
-  int rpm;
+  unsigned int rpm;
   double liquid_temp;
-  int duty;
+  unsigned int duty;
 };
 
 
