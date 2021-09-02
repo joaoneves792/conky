@@ -123,6 +123,10 @@
 #ifdef BUILD_KRAKEN
 #include "kraken.h"
 #endif
+#ifdef BUILD_BIPANDA
+#include "bitpanda.h"
+#endif
+
 
 #include "lua-config.hh"
 #include "setting.hh"

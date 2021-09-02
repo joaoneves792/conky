@@ -115,6 +115,9 @@ static void print_version() {
 #ifdef BUILD_KRAKEN
             << _("  * kraken\n")
 #endif /* BUILD_KRAKEN */
+#ifdef BUILD_BITPANDA
+            << _("  * bitpanda\n")
+#endif /* BUILD_BITPANDA */
 #ifdef BUILD_BUILTIN_CONFIG
             << _("  * builtin default configuration\n")
 #endif /* BUILD_BUILTIN_CONFIG */

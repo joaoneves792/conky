@@ -299,6 +299,14 @@ if(BUILD_KRAKEN)
   set(optional_sources ${optional_sources} ${kraken_srcs})
 endif(BUILD_KRAKEN)
 
+if(BUILD_BITPANDA)
+  find_package(jsoncpp REQUIRED)
+  set(conky_libs ${conky_libs} ${JSONCPP_LIBRARY})
+  set(conky_includes ${conky_includes} ${JSONCPP_INCLUDE_DIR})
+  set(bitpanda_srcs bitpanda.cc bitpanda.h)
+  set(optional_sources ${optional_sources} ${bitpanda_srcs})
+endif(BUILD_BITPANDA)
+
 if(BUILD_TESTS)
   # Create a library strictly for testing
   add_library(conky_core ${conky_sources} ${optional_sources})

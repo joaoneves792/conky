@@ -49,6 +49,7 @@ build() {
     -D BUILD_PULSEAUDIO=ON \
     -D BUILD_JOURNAL=ON \
     -D BUILD_KRAKEN=ON \
+    -D BUILD_BITPANDA=ON \
     -D CMAKE_INSTALL_PREFIX=/usr \
     -Wno-dev \
     -S .

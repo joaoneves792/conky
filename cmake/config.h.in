@@ -74,6 +74,8 @@
 
 #cmakedefine BUILD_KRAKEN 0
 
+#cmakedefine BUILD_BITPANDA 0
+
 #cmakedefine BUILD_XMMS2 1
 
 #cmakedefine BUILD_HDDTEMP 1
