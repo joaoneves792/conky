@@ -7,7 +7,7 @@
 pkgname=conky-joao
 _pkgname=conky
 pkgver=1.12.2.r11.g9df88a8c
-_gitcommit=9df88a8c37f04c9e69cd1151beea40bee73942da
+_gitcommit=eb678cc0a1beae2ea67efc2ee0adca02d6d1ef96
 pkgrel=1
 pkgdesc='Lightweight system monitor for X'
 url='https://github.com/brndnmtthws/conky'
