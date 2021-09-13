@@ -17,13 +17,13 @@ void print_max(struct text_object *obj, char *p, unsigned int p_max_size) {
   char* stored_string = (char*)(obj->data.opaque);
 
   double reading;
-  sscanf(&(buf[0]), "%f", &reading);
+  sscanf(&(buf[0]), "%lf", &reading);
 
   if(!strlen(stored_string))
     strncpy(stored_string, &(buf[0]), MAX_MAX_STR_LEN);
   
   double old_reading;
-  sscanf(stored_string, "%f", &old_reading);
+  sscanf(stored_string, "%lf", &old_reading);
 
   if(reading > old_reading)
     strncpy(stored_string, &(buf[0]), MAX_MAX_STR_LEN);
