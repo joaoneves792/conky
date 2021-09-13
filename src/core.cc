@@ -116,6 +116,7 @@
 #ifdef BUILD_BITPANDA
 #include "bitpanda.h"
 #endif /* BUILD_BITPANDA */
+#include "max.h"
 
 /* check for OS and include appropriate headers */
 #if defined(__linux__)
@@ -1731,6 +1732,9 @@ struct text_object *construct_text_object(char *s, const char *arg, long line,
   obj->callbacks.print = &bitpanda_print_info;
   obj->callbacks.free = &bitpanda_free_obj_info;
 #endif /* BUILD_BITPANDA */
+  END OBJ_ARG(max, nullptr, "max needs an argument") max_parse_arg(obj, arg);
+  obj->callbacks.print = &print_max;
+  obj->callbacks.free = &max_free_obj_info;
 #ifdef BUILD_AUDACIOUS
   END OBJ(audacious_status, 0) obj->callbacks.print = &print_audacious_status;
   END OBJ_ARG(audacious_title, 0, "audacious_title needs an argument")

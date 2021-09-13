@@ -307,6 +307,8 @@ if(BUILD_BITPANDA)
   set(optional_sources ${optional_sources} ${bitpanda_srcs})
 endif(BUILD_BITPANDA)
 
+set( conky_sources ${conky_sources} max.cc max.h)
+
 if(BUILD_TESTS)
   # Create a library strictly for testing
   add_library(conky_core ${conky_sources} ${optional_sources})
