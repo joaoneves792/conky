@@ -106,7 +106,8 @@ static void bitpanda_process_info(char *p, int p_max_size, int interval, int own
   const std::string change = currency_object["price_change_percentage"].asString();
 
 
-  snprintf(p, p_max_size, "%s %0.2f€ %0.2f€ %s%%", time, last_price, last_price*ownedmicros/1000000.0,  change.c_str());
+  //snprintf(p, p_max_size, "%s %0.2f€ %0.2f€ %s%%", time, last_price, last_price*ownedmicros/1000000.0,  change.c_str());
+  snprintf(p, p_max_size, "%s %0.2f€ %s%%", time, last_price, change.c_str());
 }
 
 void bitpanda_scan_arg(struct text_object *obj, const char *arg) {

@@ -6,9 +6,9 @@
 
 pkgname=conky-joao
 _pkgname=conky
-pkgver=1.12.2.r15.geb678cc0
+pkgver=1.12.2.r17.g572746c7
 _gitcommit=572746c74b2a4b08dbf098cc5360d938a98e2c4b
-pkgrel=1
+pkgrel=2
 pkgdesc='Lightweight system monitor for X'
 url='https://github.com/brndnmtthws/conky'
 license=('BSD' 'GPL')
@@ -32,9 +32,9 @@ pkgver() {
 build() {
   cd ${_pkgname}
   cmake \
+    -Wno-dev \
+    -S . \
     -B build \
-    -D CMAKE_BUILD_TYPE=Release \
-    -D MAINTAINER_MODE=ON \
     -D BUILD_DOCS=ON \
     -D BUILD_NVIDIA=ON \
     -D BUILD_IBM=ON \
@@ -51,10 +51,10 @@ build() {
     -D BUILD_KRAKEN=ON \
     -D BUILD_BITPANDA=ON \
     -D CMAKE_INSTALL_PREFIX=/usr \
-    -Wno-dev \
-    -S .
+    -D CMAKE_BUILD_TYPE=Release
+#    -D MAINTAINER_MODE=ON \
 
-  make -C build
+  make -C build -j16
 }
 
 package() {
